@@ -1,0 +1,10 @@
+# https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+groups:
+  - name: 'co2'
+    rules:
+      - alert: 'Over 1000ppm'
+        expr: mhz19b_co2_ppm > 1000
+        for: 5m # 条件が5分間続いたら発報（アラートを発報するまでの猶予時間）
+        annotations:
+          summary: '二酸化炭素濃度が 1000ppm を超えました。'
+          description: "{{ $value }}"

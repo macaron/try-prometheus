@@ -1,0 +1,26 @@
+# https://prometheus.io/docs/prometheus/latest/configuration/configuration/
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+  external_labels:
+    monitor: 'macaron-homelab'
+
+rule_files:
+  - '/etc/prometheus/alertrules.yml'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets:
+          - 'localhost:9090'
+
+  - job_name: 'co2'
+    static_configs:
+      - targets:
+          - '192.168.2.150:8081'
